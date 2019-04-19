@@ -57,7 +57,7 @@ class BrowserActivity : BaseActivity() {
                 override fun onProgressChanged(p0: WebView?, p1: Int) {
                     super.onProgressChanged(p0, p1)
                     progressBar.progress = p1
-                    Log.e("browser",p1.toString())
+                    Log.e("browser", p1.toString())
                 }
 
                 override fun onReceivedTitle(p0: WebView?, p1: String?) {
@@ -70,7 +70,7 @@ class BrowserActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (webView.canGoBack())webView.goBack()
+        if (webView.canGoBack()) webView.goBack()
         else super.onBackPressed()
     }
 

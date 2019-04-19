@@ -1,5 +1,6 @@
 package luyao.wanandroid.ui.home
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,13 +27,15 @@ class HomePresenter(
     override fun getBanners() {
         launchOnUITryCatch({
             val result = WanRetrofitClient.service.getBanner().await()
+            Log.d("Home-getBanner:", result.toString())
             mView.getBanner(result.data)
-        })
+        },true)
     }
 
     override fun getArticles(page: Int) {
         launchOnUITryCatch({
             val result = WanRetrofitClient.service.getHomeArticles(page).await()
+            Log.d("Home-getHomeArticles:", result.toString())
             mView.getArticles(result.data)
         })
     }
@@ -40,6 +43,7 @@ class HomePresenter(
     override fun collectArticle(article: Article) {
         CoroutineScope(Dispatchers.Main).launch {
             val result = WanRetrofitClient.service.collectArticle(article.id).await()
+            Log.d("Home-collectArticle:", result.toString())
             mView.collectArticle(article)
         }
     }
@@ -47,6 +51,7 @@ class HomePresenter(
     override fun cancelCollectArticle(article: Article) {
         CoroutineScope(Dispatchers.Main).launch {
             val result = WanRetrofitClient.service.cancelCollectArticle(article.id).await()
+            Log.d("Home-cancelCollect:", result.toString())
             mView.cancleCollectArticle(article)
         }
     }

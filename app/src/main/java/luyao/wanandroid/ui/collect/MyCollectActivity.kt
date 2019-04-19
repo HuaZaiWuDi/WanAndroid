@@ -60,8 +60,8 @@ class MyCollectActivity : BaseActivity(), CollectContract.View {
                     putExtra(BrowserActivity.URL, articleAdapter.data[position].link)
                     startActivity(this)
                 }
-
             }
+
             setLoadMoreView(CustomLoadMoreView())
             setOnLoadMoreListener({ loadMore() }, collectRecycleView)
         }

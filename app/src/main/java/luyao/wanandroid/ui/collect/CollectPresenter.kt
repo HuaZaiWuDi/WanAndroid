@@ -4,8 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import luyao.wanandroid.api.WanRetrofitClient
-import luyao.wanandroid.ext.launchOnUI
-import luyao.wanandroid.ext.launchOnUITryCatch
 
 /**
  * Created by Lu
@@ -24,10 +22,12 @@ class CollectPresenter(
     }
 
     override fun getCollectArticles(page: Int) {
-        CoroutineScope(Dispatchers.Main).launch {
+        val job = CoroutineScope(Dispatchers.Main).launch {
             val result = WanRetrofitClient.service.getCollectArticles(page).await()
-            if (result.errorCode == -1) mView.getCollectArticlesError(result.errorMsg) else mView.getCollectArticles(result.data)
+            if (result.errorCode != 0) mView.getCollectArticlesError(result.errorMsg) else mView.getCollectArticles(result.data)
         }
+        if (job.isActive)
+            job.cancel()
 
     }
 
